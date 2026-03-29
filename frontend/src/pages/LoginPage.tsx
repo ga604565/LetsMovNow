@@ -32,7 +32,7 @@ export default function LoginPage() {
         <div style={styles.header}>
           <div style={styles.icon}>🏠</div>
           <h1 style={styles.title}>Welcome back</h1>
-          <p style={styles.sub}>Sign in to your CampusNest account</p>
+          <p style={styles.sub}>Sign in to your LetsMovNow account</p>
         </div>
 
         <form onSubmit={submit} style={styles.form}>

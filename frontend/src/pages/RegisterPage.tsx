@@ -46,7 +46,7 @@ export default function RegisterPage() {
       <div style={styles.card}>
         <div style={styles.header}>
           <div style={styles.icon}>🏠</div>
-          <h1 style={styles.title}>Join CampusNest</h1>
+          <h1 style={styles.title}>Join LetsMovNow</h1>
           <p style={styles.sub}>Find or list student rentals near campus</p>
         </div>
 

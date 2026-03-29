@@ -5,7 +5,7 @@ export default function Footer() {
     <footer style={styles.footer}>
       <div style={styles.inner}>
         <div style={styles.brand}>
-          <span style={styles.logo}>🏠 Campus<span style={{ color: '#4ECDC4' }}>Nest</span></span>
+          <span style={styles.logo}>🏠 LetsMovNow</span>
           <p style={styles.tagline}>Student rentals near every campus.</p>
         </div>
         <div style={styles.links}>
@@ -14,7 +14,7 @@ export default function Footer() {
           <Link to="/register" style={styles.link}>Register</Link>
         </div>
         <div style={styles.copy}>
-          © {new Date().getFullYear()} CampusNest. Built for students, by students.
+          © {new Date().getFullYear()} LetsMovNow. Built for students, by students.
         </div>
       </div>
     </footer>

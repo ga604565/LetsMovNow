@@ -34,7 +34,7 @@ export function VerifyEmailPage() {
         {status === 'success' && (
           <><div style={{ fontSize: 56, marginBottom: 16 }}>🎉</div>
           <h2 style={{ fontFamily: "'Syne', sans-serif", marginBottom: 8 }}>Email verified!</h2>
-          <p style={{ color: '#9BA3C7' }}>Redirecting you to CampusNest...</p></>
+          <p style={{ color: '#9BA3C7' }}>Redirecting you to LetsMovNow...</p></>
         )}
         {status === 'error' && (
           <><div style={{ fontSize: 48, marginBottom: 16 }}>❌</div>
