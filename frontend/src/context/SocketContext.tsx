@@ -32,10 +32,10 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
     }
 
     // Connect with user ID for routing events
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const socket = io(SOCKET_URL, {
       auth: { userId: user._id },
-      transports: ['websocket'] as string[],
-    })
+    } as any)
 
     socket.on('connect', () => {
       console.log('Socket connected')
