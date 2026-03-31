@@ -20,6 +20,7 @@ export default function Navbar() {
       .catch(() => {})
   }, [isAuthenticated, unreadCount])
 
+
   const favoriteCount = user?.favorites?.length ?? 0
 
   const handleLogout = () => {
