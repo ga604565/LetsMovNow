@@ -32,7 +32,7 @@ export default function RegisterPage() {
         <div style={styles.card}>
           <div style={{ textAlign: 'center' }}>
             <div style={{ fontSize: 56, marginBottom: 16 }}>📬</div>
-            <h2 style={{ fontFamily: "'Syne', sans-serif", marginBottom: 12 }}>Check your inbox</h2>
+            <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", marginBottom: 12 }}>Check your inbox</h2>
             <p style={{ color: '#9BA3C7', lineHeight: 1.7, marginBottom: 24 }}>{success}</p>
             <Link to="/login" className="btn btn-primary">Go to Sign In</Link>
           </div>
@@ -97,7 +97,7 @@ const styles: Record<string, React.CSSProperties> = {
   card:   { background: '#1E2340', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 24, padding: '40px 36px', width: '100%', maxWidth: 460, boxShadow: '0 8px 40px rgba(0,0,0,0.4)' },
   header: { textAlign: 'center', marginBottom: 24 },
   icon:   { fontSize: 40, marginBottom: 12 },
-  title:  { fontSize: 28, fontFamily: "'Syne', sans-serif", marginBottom: 6 },
+  title:  { fontSize: 28, fontFamily: "'Plus Jakarta Sans', sans-serif", marginBottom: 6 },
   sub:    { fontSize: 15, color: '#9BA3C7' },
   eduNote: { background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: '12px 16px', fontSize: 13, color: '#9BA3C7', lineHeight: 1.6, marginBottom: 20, transition: 'all 0.2s' },
   eduNoteActive: { background: 'rgba(78,205,196,0.08)', borderColor: 'rgba(78,205,196,0.3)', color: '#cde8e6' },

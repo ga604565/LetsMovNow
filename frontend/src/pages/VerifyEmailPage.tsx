@@ -33,12 +33,12 @@ export function VerifyEmailPage() {
         )}
         {status === 'success' && (
           <><div style={{ fontSize: 56, marginBottom: 16 }}>🎉</div>
-          <h2 style={{ fontFamily: "'Syne', sans-serif", marginBottom: 8 }}>Email verified!</h2>
+          <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", marginBottom: 8 }}>Email verified!</h2>
           <p style={{ color: '#9BA3C7' }}>Redirecting you to LetsMovNow...</p></>
         )}
         {status === 'error' && (
           <><div style={{ fontSize: 48, marginBottom: 16 }}>❌</div>
-          <h2 style={{ fontFamily: "'Syne', sans-serif", marginBottom: 8 }}>Link invalid or expired</h2>
+          <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", marginBottom: 8 }}>Link invalid or expired</h2>
           <p style={{ color: '#9BA3C7', marginBottom: 20 }}>Request a new verification email from the login page.</p>
           <Link to="/login" className="btn btn-primary">Go to Login</Link></>
         )}
@@ -66,12 +66,12 @@ export function ForgotPasswordPage() {
       <div style={cardStyle}>
         {sent ? (
           <><div style={{ fontSize: 48, marginBottom: 16 }}>📬</div>
-          <h2 style={{ fontFamily: "'Syne', sans-serif", marginBottom: 8 }}>Check your email</h2>
+          <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", marginBottom: 8 }}>Check your email</h2>
           <p style={{ color: '#9BA3C7', marginBottom: 20 }}>If an account exists for {email}, a reset link has been sent.</p>
           <Link to="/login" className="btn btn-ghost">Back to login</Link></>
         ) : (
           <>
-          <h2 style={{ fontFamily: "'Syne', sans-serif", marginBottom: 8 }}>Forgot password?</h2>
+          <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", marginBottom: 8 }}>Forgot password?</h2>
           <p style={{ color: '#9BA3C7', marginBottom: 24 }}>Enter your email and we'll send you a reset link.</p>
           <form onSubmit={submit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <input className="form-input" type="email" placeholder="your@email.com" value={email} onChange={(e) => setEmail(e.target.value)} required autoFocus />
@@ -111,7 +111,7 @@ export function ResetPasswordPage() {
   return (
     <div style={centerStyle}>
       <div style={cardStyle}>
-        <h2 style={{ fontFamily: "'Syne', sans-serif", marginBottom: 8 }}>Set new password</h2>
+        <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", marginBottom: 8 }}>Set new password</h2>
         <p style={{ color: '#9BA3C7', marginBottom: 24 }}>Choose a strong password for your account.</p>
         <form onSubmit={submit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           {error && <div style={{ color: '#FF6B6B', fontSize: 14 }}>{error}</div>}

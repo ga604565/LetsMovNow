@@ -109,7 +109,7 @@ const styles: Record<string, React.CSSProperties> = {
   },
   header: { textAlign: 'center', marginBottom: 32 },
   icon:   { fontSize: 40, marginBottom: 12 },
-  title:  { fontSize: 28, fontFamily: "'Syne', sans-serif", marginBottom: 6 },
+  title:  { fontSize: 28, fontFamily: "'Plus Jakarta Sans', sans-serif", marginBottom: 6 },
   sub:    { fontSize: 15, color: '#9BA3C7' },
   form:   { display: 'flex', flexDirection: 'column', gap: 18 },
   error: {

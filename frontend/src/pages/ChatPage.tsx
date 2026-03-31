@@ -97,7 +97,7 @@ export default function ChatPage() {
   return (
     <div className="page">
       <div className="container" style={{ maxWidth: 960 }}>
-        <h1 style={{ fontFamily: "'Syne', sans-serif", fontSize: 28, marginBottom: 24 }}>
+        <h1 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 28, marginBottom: 24 }}>
           Messages {totalUnread > 0 && <span style={styles.unreadBadge}>{totalUnread}</span>}
         </h1>
 
@@ -233,18 +233,18 @@ const styles: Record<string, React.CSSProperties> = {
   threadList:      { borderRight: '1px solid rgba(255,255,255,0.08)', overflowY: 'auto' },
   threadItem:      { display: 'flex', alignItems: 'center', gap: 10, padding: '14px 16px', width: '100%', background: 'none', border: 'none', borderBottom: '1px solid rgba(255,255,255,0.05)', cursor: 'pointer', textAlign: 'left', transition: 'background 0.12s' },
   threadItemActive:{ background: 'rgba(78,205,196,0.08)', borderLeft: '3px solid #4ECDC4' },
-  threadAvatar:    { width: 38, height: 38, borderRadius: '50%', background: 'linear-gradient(135deg,#4ECDC4,#2C3E6B)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, fontWeight: 700, color: '#fff', fontFamily: "'Syne', sans-serif", flexShrink: 0 },
+  threadAvatar:    { width: 38, height: 38, borderRadius: '50%', background: 'linear-gradient(135deg,#4ECDC4,#2C3E6B)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, fontWeight: 700, color: '#fff', fontFamily: "'Plus Jakarta Sans', sans-serif", flexShrink: 0 },
   threadInfo:      { flex: 1, minWidth: 0 },
-  threadName:      { fontSize: 14, fontWeight: 600, color: '#F0F2FF', fontFamily: "'Syne', sans-serif", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' },
+  threadName:      { fontSize: 14, fontWeight: 600, color: '#F0F2FF', fontFamily: "'Plus Jakarta Sans', sans-serif", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' },
   threadSnippet:   { fontSize: 11, color: '#4ECDC4', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', marginTop: 1 },
   threadLast:      { fontSize: 12, color: '#9BA3C7', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', marginTop: 2 },
   threadUnread:    { width: 20, height: 20, borderRadius: '50%', background: '#4ECDC4', color: '#1B1F3B', fontSize: 11, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 },
   msgPane:         { display: 'flex', flexDirection: 'column', overflow: 'hidden' },
   msgHeader:       { display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px', borderBottom: '1px solid rgba(255,255,255,0.08)' },
   listingThumb:    { width: 48, height: 36, objectFit: 'cover', borderRadius: 8, flexShrink: 0 },
-  msgHeaderTitle:  { fontSize: 14, fontWeight: 600, color: '#F0F2FF', fontFamily: "'Syne', sans-serif", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' },
+  msgHeaderTitle:  { fontSize: 14, fontWeight: 600, color: '#F0F2FF', fontFamily: "'Plus Jakarta Sans', sans-serif", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' },
   iconAction:      { background: 'none', border: 'none', fontSize: 18, cursor: 'pointer', padding: 4 },
-  offMarketBanner: { background: 'rgba(255,107,107,0.12)', borderBottom: '1px solid rgba(255,107,107,0.2)', padding: '8px 16px', fontSize: 13, color: '#FF6B6B', fontFamily: "'Syne', sans-serif", fontWeight: 600 },
+  offMarketBanner: { background: 'rgba(255,107,107,0.12)', borderBottom: '1px solid rgba(255,107,107,0.2)', padding: '8px 16px', fontSize: 13, color: '#FF6B6B', fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 600 },
   blockedBanner:   { background: 'rgba(255,107,107,0.08)', borderBottom: '1px solid rgba(255,107,107,0.15)', padding: '8px 16px', fontSize: 13, color: '#FF6B6B' },
   messages:        { flex: 1, overflowY: 'auto', padding: '16px', display: 'flex', flexDirection: 'column', gap: 12 },
   msgRow:          { display: 'flex', alignItems: 'flex-end', gap: 8 },
@@ -252,7 +252,7 @@ const styles: Record<string, React.CSSProperties> = {
   bubble:          { maxWidth: '70%', borderRadius: 16, padding: '10px 14px' },
   bubbleMe:        { background: '#4ECDC4', borderBottomRightRadius: 4 },
   bubbleThem:      { background: '#252A4A', borderBottomLeftRadius: 4, border: '1px solid rgba(255,255,255,0.08)' },
-  senderName:      { fontSize: 11, color: '#9BA3C7', marginBottom: 4, fontFamily: "'Syne', sans-serif", fontWeight: 600 },
+  senderName:      { fontSize: 11, color: '#9BA3C7', marginBottom: 4, fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 600 },
   bubbleText:      { fontSize: 14, lineHeight: 1.5, color: '#F0F2FF', wordBreak: 'break-word' },
   msgTime:         { fontSize: 10, color: 'rgba(255,255,255,0.4)', marginTop: 4, textAlign: 'right' },
   inputRow:        { display: 'flex', gap: 8, padding: '12px 16px', borderTop: '1px solid rgba(255,255,255,0.08)' },

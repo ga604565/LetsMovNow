@@ -54,7 +54,7 @@ export default function AdminPage() {
   return (
     <div className="page">
       <div className="container">
-        <h1 style={{ fontFamily: "'Syne', sans-serif", fontSize: 32, marginBottom: 4 }}>Admin Panel</h1>
+        <h1 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 32, marginBottom: 4 }}>Admin Panel</h1>
         <p style={{ color: '#9BA3C7', marginBottom: 28 }}>Full platform control</p>
 
         {/* Tabs */}
@@ -170,12 +170,12 @@ export default function AdminPage() {
 
 const styles: Record<string, React.CSSProperties> = {
   tabs:        { display: 'flex', gap: 4, background: '#1E2340', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: 4, width: 'fit-content', marginBottom: 20 },
-  tab:         { padding: '8px 20px', borderRadius: 9, border: 'none', background: 'transparent', color: '#9BA3C7', fontSize: 14, fontWeight: 600, cursor: 'pointer', fontFamily: "'Syne', sans-serif", transition: 'all 0.15s' },
+  tab:         { padding: '8px 20px', borderRadius: 9, border: 'none', background: 'transparent', color: '#9BA3C7', fontSize: 14, fontWeight: 600, cursor: 'pointer', fontFamily: "'Plus Jakarta Sans', sans-serif", transition: 'all 0.15s' },
   tabActive:   { background: '#4ECDC4', color: '#1B1F3B' },
   toolbar:     { display: 'flex', gap: 10, marginBottom: 16 },
   search:      { flex: 1, background: '#1E2340', border: '1.5px solid rgba(255,255,255,0.08)', borderRadius: 10, color: '#F0F2FF', fontSize: 14, padding: '10px 14px', outline: 'none', fontFamily: "'DM Sans', sans-serif", maxWidth: 360 },
   filter:      { background: '#1E2340', border: '1.5px solid rgba(255,255,255,0.08)', borderRadius: 10, color: '#F0F2FF', fontSize: 14, padding: '10px 14px', outline: 'none', fontFamily: "'DM Sans', sans-serif" },
   table:       { background: '#1E2340', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 16, overflow: 'hidden' },
-  tableHeader: { display: 'grid', gridTemplateColumns: '1.5fr 2fr 1fr 1fr auto', gap: 12, padding: '12px 16px', background: 'rgba(255,255,255,0.04)', fontSize: 11, fontWeight: 600, color: '#9BA3C7', textTransform: 'uppercase', letterSpacing: '0.06em', fontFamily: "'Syne', sans-serif" },
+  tableHeader: { display: 'grid', gridTemplateColumns: '1.5fr 2fr 1fr 1fr auto', gap: 12, padding: '12px 16px', background: 'rgba(255,255,255,0.04)', fontSize: 11, fontWeight: 600, color: '#9BA3C7', textTransform: 'uppercase', letterSpacing: '0.06em', fontFamily: "'Plus Jakarta Sans', sans-serif" },
   tableRow:    { display: 'grid', gridTemplateColumns: '1.5fr 2fr 1fr 1fr auto', gap: 12, padding: '12px 16px', borderTop: '1px solid rgba(255,255,255,0.05)', alignItems: 'center', fontSize: 14 },
 }

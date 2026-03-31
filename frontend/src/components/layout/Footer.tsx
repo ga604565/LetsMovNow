@@ -39,7 +39,7 @@ const styles: Record<string, React.CSSProperties> = {
   },
   brand: {},
   logo: {
-    fontFamily: "'Syne', sans-serif",
+    fontFamily: "'Plus Jakarta Sans', sans-serif",
     fontWeight: 800,
     fontSize:   18,
     color:      '#F0F2FF',
@@ -54,7 +54,7 @@ const styles: Record<string, React.CSSProperties> = {
     gap:     24,
   },
   link: {
-    fontFamily: "'Syne', sans-serif",
+    fontFamily: "'Plus Jakarta Sans', sans-serif",
     fontWeight: 600,
     fontSize:   13,
     color:      '#9BA3C7',

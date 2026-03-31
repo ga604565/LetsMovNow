@@ -145,7 +145,7 @@ const styles: Record<string, React.CSSProperties> = {
     fontSize:   48,
     fontWeight: 800,
     lineHeight: 1.15,
-    fontFamily: "'Syne', sans-serif",
+    fontFamily: "'Plus Jakarta Sans', sans-serif",
   },
   heroSub: {
     fontSize:  18,
@@ -181,7 +181,7 @@ const styles: Record<string, React.CSSProperties> = {
     fontWeight:   600,
     color:        '#9BA3C7',
     cursor:       'pointer',
-    fontFamily:   "'Syne', sans-serif",
+    fontFamily:   "'Plus Jakarta Sans', sans-serif",
     transition:   'all 0.15s',
   },
   toggleActive: {
@@ -204,7 +204,7 @@ const styles: Record<string, React.CSSProperties> = {
     fontSize:     14,
     fontWeight:   600,
     cursor:       'pointer',
-    fontFamily:   "'Syne', sans-serif",
+    fontFamily:   "'Plus Jakarta Sans', sans-serif",
   },
   pageBtnActive: {
     background:  '#4ECDC4',

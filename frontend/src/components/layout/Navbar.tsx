@@ -189,7 +189,7 @@ const styles: Record<string, React.CSSProperties> = {
   },
   logoIcon: { fontSize: 22 },
   logoText: {
-    fontFamily: "'Syne', sans-serif",
+    fontFamily: "'Plus Jakarta Sans', sans-serif",
     fontWeight: 800,
     fontSize:   20,
     color:      '#F0F2FF',
@@ -202,7 +202,7 @@ const styles: Record<string, React.CSSProperties> = {
     flex:       1,
   },
   link: {
-    fontFamily:  "'Syne', sans-serif",
+    fontFamily:  "'Plus Jakarta Sans', sans-serif",
     fontWeight:  600,
     fontSize:    14,
     color:       '#9BA3C7',
@@ -250,7 +250,7 @@ const styles: Record<string, React.CSSProperties> = {
     justifyContent: 'center',
     padding:    '0 4px',
     color:      '#fff',
-    fontFamily: "'Syne', sans-serif",
+    fontFamily: "'Plus Jakarta Sans', sans-serif",
   },
   userBtn: {
     display:       'flex',
@@ -276,13 +276,13 @@ const styles: Record<string, React.CSSProperties> = {
     fontSize:       14,
     fontWeight:     700,
     color:          '#fff',
-    fontFamily:     "'Syne', sans-serif",
+    fontFamily:     "'Plus Jakarta Sans', sans-serif",
   },
   userName: {
     fontSize:   14,
     fontWeight: 600,
     color:      '#F0F2FF',
-    fontFamily: "'Syne', sans-serif",
+    fontFamily: "'Plus Jakarta Sans', sans-serif",
   },
   verifiedDot: {
     fontSize:        11,
@@ -328,7 +328,7 @@ const styles: Record<string, React.CSSProperties> = {
     fontFamily:     "'DM Sans', sans-serif",
   },
   signInBtn: {
-    fontFamily:  "'Syne', sans-serif",
+    fontFamily:  "'Plus Jakarta Sans', sans-serif",
     fontWeight:  600,
     fontSize:    14,
     color:       '#9BA3C7',
@@ -340,7 +340,7 @@ const styles: Record<string, React.CSSProperties> = {
     transition:  'all 0.15s',
   },
   registerBtn: {
-    fontFamily:  "'Syne', sans-serif",
+    fontFamily:  "'Plus Jakarta Sans', sans-serif",
     fontWeight:  700,
     fontSize:    14,
     color:       '#1B1F3B',

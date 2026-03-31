@@ -100,14 +100,14 @@ export default function MyListingsPage() {
 
 const styles: Record<string, React.CSSProperties> = {
   header:       { display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 32 },
-  title:        { fontFamily: "'Syne', sans-serif", fontSize: 32 },
+  title:        { fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 32 },
   list:         { display: 'flex', flexDirection: 'column', gap: 12 },
   row:          { background: '#1E2340', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 16, padding: 16, display: 'flex', alignItems: 'center', gap: 16 },
   thumb:        { width: 100, height: 72, objectFit: 'cover', borderRadius: 10, flexShrink: 0 },
   info:         { flex: 1, minWidth: 0 },
   rowTop:       { display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 },
-  listingTitle: { fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 16, color: '#F0F2FF', textDecoration: 'none', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' },
-  statusPill:   { fontSize: 11, fontWeight: 700, padding: '3px 10px', borderRadius: 20, flexShrink: 0, fontFamily: "'Syne', sans-serif" },
+  listingTitle: { fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 700, fontSize: 16, color: '#F0F2FF', textDecoration: 'none', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' },
+  statusPill:   { fontSize: 11, fontWeight: 700, padding: '3px 10px', borderRadius: 20, flexShrink: 0, fontFamily: "'Plus Jakarta Sans', sans-serif" },
   meta:         { display: 'flex', gap: 8, fontSize: 13, color: '#9BA3C7', flexWrap: 'wrap' },
   actions:      { display: 'flex', gap: 8, alignItems: 'center', flexShrink: 0, flexWrap: 'wrap' },
 }

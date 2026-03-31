@@ -27,7 +27,7 @@ export default function FavoritesPage() {
   return (
     <div className="page">
       <div className="container">
-        <h1 style={{ fontFamily: "'Syne', sans-serif", fontSize: 32, marginBottom: 8 }}>Saved Homes</h1>
+        <h1 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 32, marginBottom: 8 }}>Saved Homes</h1>
         <p style={{ color: '#9BA3C7', marginBottom: 32 }}>
           {listings.length} saved listing{listings.length !== 1 ? 's' : ''}
         </p>

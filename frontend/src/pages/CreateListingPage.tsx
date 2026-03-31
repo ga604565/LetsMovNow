@@ -351,14 +351,14 @@ export function EditListingPage() {
 }
 
 const styles: Record<string, React.CSSProperties> = {
-  heading:    { fontFamily: "'Syne', sans-serif", fontSize: 32, marginBottom: 8 },
+  heading:    { fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 32, marginBottom: 8 },
   sub:        { color: '#9BA3C7', marginBottom: 32 },
   form:       { display: 'flex', flexDirection: 'column', gap: 20, background: '#1E2340', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 20, padding: '32px' },
   row2:       { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 },
   error:      { background: 'rgba(255,107,107,0.1)', border: '1px solid rgba(255,107,107,0.3)', borderRadius: 10, padding: '10px 14px', fontSize: 14, color: '#FF6B6B' },
   suggestions:{ position: 'absolute', top: 'calc(100% + 2px)', left: 0, right: 0, background: '#252A4A', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, zIndex: 10, overflow: 'hidden', boxShadow: '0 8px 24px rgba(0,0,0,0.4)' },
   suggestion: { display: 'flex', flexDirection: 'column', gap: 2, width: '100%', padding: '10px 14px', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', borderBottom: '1px solid rgba(255,255,255,0.05)', fontFamily: "'DM Sans', sans-serif" },
-  uploadBtn:  { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, border: '2px dashed rgba(255,255,255,0.15)', borderRadius: 12, padding: '20px', cursor: 'pointer', fontSize: 14, color: '#9BA3C7', fontFamily: "'Syne', sans-serif", fontWeight: 600, transition: 'border-color 0.15s' },
+  uploadBtn:  { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, border: '2px dashed rgba(255,255,255,0.15)', borderRadius: 12, padding: '20px', cursor: 'pointer', fontSize: 14, color: '#9BA3C7', fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 600, transition: 'border-color 0.15s' },
   thumbRow:   { display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 8 },
   thumbWrap:  { position: 'relative', width: 80, height: 60 },
   thumbImg:   { width: '100%', height: '100%', objectFit: 'cover', borderRadius: 8 },
@@ -366,7 +366,7 @@ const styles: Record<string, React.CSSProperties> = {
   addressVerify: { display: 'flex', flexDirection: 'column', gap: 10 },
   addressConfirmed: { display: 'flex', alignItems: 'center', gap: 12, background: 'rgba(78,205,196,0.1)', border: '1px solid rgba(78,205,196,0.3)', borderRadius: 10, padding: '10px 14px', fontSize: 14, color: '#4ECDC4', fontWeight: 600 },
   changeBtn:  { marginLeft: 'auto', background: 'none', border: '1px solid rgba(78,205,196,0.4)', borderRadius: 6, color: '#4ECDC4', fontSize: 12, padding: '4px 10px', cursor: 'pointer' },
-  searchBtn:  { background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 10, color: '#F0F2FF', fontSize: 14, fontWeight: 600, padding: '10px 16px', cursor: 'pointer', fontFamily: "'Syne', sans-serif", textAlign: 'left' },
+  searchBtn:  { background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 10, color: '#F0F2FF', fontSize: 14, fontWeight: 600, padding: '10px 16px', cursor: 'pointer', fontFamily: "'Plus Jakarta Sans', sans-serif", textAlign: 'left' },
   resultsBox: { background: '#252A4A', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, overflow: 'hidden' },
   resultsHint:{ fontSize: 12, color: '#9BA3C7', padding: '10px 14px 4px', margin: 0 },
   resultItem: { display: 'block', width: '100%', padding: '10px 14px', background: 'none', border: 'none', borderTop: '1px solid rgba(255,255,255,0.05)', color: '#F0F2FF', fontSize: 13, cursor: 'pointer', textAlign: 'left', fontFamily: "'DM Sans', sans-serif", lineHeight: 1.4 },
