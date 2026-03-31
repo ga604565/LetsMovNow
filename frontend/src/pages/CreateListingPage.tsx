@@ -5,6 +5,21 @@ import type { University } from '../types'
 
 const US_STATES = ['AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY']
 
+interface AddressResult {
+  display_name: string
+  lat: string
+  lon: string
+  address: {
+    house_number?: string
+    road?: string
+    city?: string
+    town?: string
+    village?: string
+    state?: string
+    postcode?: string
+  }
+}
+
 function ListingForm({ editId }: { editId?: string }) {
   const navigate = useNavigate()
   const [form, setForm] = useState({
@@ -22,6 +37,12 @@ function ListingForm({ editId }: { editId?: string }) {
   const [loading, setLoading]       = useState(false)
   const debounce = useRef<ReturnType<typeof setTimeout> | null>(null)
 
+  // Address lookup state
+  const [addressResults, setAddressResults] = useState<AddressResult[]>([])
+  const [addressConfirmed, setAddressConfirmed] = useState(false)
+  const [addressSearching, setAddressSearching] = useState(false)
+  const [confirmedCoords, setConfirmedCoords] = useState<{ lat: string; lon: string } | null>(null)
+
   // Load existing listing for edit
   useEffect(() => {
     if (!editId) return
@@ -36,6 +57,7 @@ function ListingForm({ editId }: { editId?: string }) {
       })
       setUniQuery(l.university)
       setExisting(l.images)
+      setAddressConfirmed(true)
     }).catch(() => navigate('/my-listings'))
   }, [editId])
 
@@ -70,14 +92,62 @@ function ListingForm({ editId }: { editId?: string }) {
     } catch { alert('Failed to remove image') }
   }
 
+  const searchAddress = async () => {
+    if (!form.address || !form.city || !form.state) {
+      setError('Please fill in address, city and state before searching.')
+      return
+    }
+    setAddressSearching(true)
+    setAddressResults([])
+    setAddressConfirmed(false)
+    setConfirmedCoords(null)
+    try {
+      const q = encodeURIComponent(`${form.address}, ${form.city}, ${form.state}, USA`)
+      const res = await fetch(`https://nominatim.openstreetmap.org/search?q=${q}&format=json&limit=5&addressdetails=1`, {
+        headers: { 'User-Agent': 'LetsMovNow/1.0 (student-rental-app)' }
+      })
+      const data: AddressResult[] = await res.json()
+      if (data.length === 0) {
+        setError('No results found. Try a more specific address.')
+      } else {
+        setAddressResults(data)
+      }
+    } catch {
+      setError('Address search failed. Please try again.')
+    } finally {
+      setAddressSearching(false)
+    }
+  }
+
+  const confirmAddress = (result: AddressResult) => {
+    const road = result.address.road || form.address
+    const houseNumber = result.address.house_number ? `${result.address.house_number} ` : ''
+    const city = result.address.city || result.address.town || result.address.village || form.city
+    const state = result.address.state || form.state
+    setForm((f) => ({
+      ...f,
+      address: `${houseNumber}${road}`,
+      city,
+      state: state.length === 2 ? state : form.state,
+    }))
+    setConfirmedCoords({ lat: result.lat, lon: result.lon })
+    setAddressConfirmed(true)
+    setAddressResults([])
+  }
+
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!editId && images.length === 0) { setError('At least one image is required'); return }
+    if (!addressConfirmed) { setError('Please search and confirm your address first.'); return }
     setError(''); setLoading(true)
     try {
       const fd = new FormData()
       Object.entries(form).forEach(([k, v]) => fd.append(k, v))
       images.forEach((f) => fd.append('images', f))
+      if (confirmedCoords) {
+        fd.append('confirmedLat', confirmedCoords.lat)
+        fd.append('confirmedLon', confirmedCoords.lon)
+      }
       if (editId) {
         await listingsApi.update(editId, fd)
       } else {
@@ -89,7 +159,13 @@ function ListingForm({ editId }: { editId?: string }) {
     } finally { setLoading(false) }
   }
 
-  const f = (k: string, v: string) => setForm((p) => ({ ...p, [k]: v }))
+  const f = (k: string, v: string) => {
+    setForm((p) => ({ ...p, [k]: v }))
+    if (k === 'address' || k === 'city' || k === 'state') {
+      setAddressConfirmed(false)
+      setConfirmedCoords(null)
+    }
+  }
 
   return (
     <div className="page">
@@ -163,7 +239,6 @@ function ListingForm({ editId }: { editId?: string }) {
           <div className="form-group">
             <label className="form-label">Street Address *</label>
             <input className="form-input" placeholder="123 College Ave" value={form.address} onChange={(e) => f('address', e.target.value)} required />
-            <span className="form-hint">Used to calculate distance to campus automatically — not shown publicly</span>
           </div>
 
           {/* City + State */}
@@ -179,6 +254,33 @@ function ListingForm({ editId }: { editId?: string }) {
                 {US_STATES.map((s) => <option key={s} value={s}>{s}</option>)}
               </select>
             </div>
+          </div>
+
+          {/* Address verification */}
+          <div style={styles.addressVerify}>
+            {addressConfirmed ? (
+              <div style={styles.addressConfirmed}>
+                ✓ Address confirmed — this listing will appear on the map
+                <button type="button" style={styles.changeBtn} onClick={() => { setAddressConfirmed(false); setConfirmedCoords(null) }}>
+                  Change
+                </button>
+              </div>
+            ) : (
+              <button type="button" style={styles.searchBtn} onClick={searchAddress} disabled={addressSearching}>
+                {addressSearching ? 'Searching...' : '🔍 Verify Address on Map'}
+              </button>
+            )}
+
+            {addressResults.length > 0 && (
+              <div style={styles.resultsBox}>
+                <p style={styles.resultsHint}>Select the correct address:</p>
+                {addressResults.map((r, i) => (
+                  <button key={i} type="button" style={styles.resultItem} onClick={() => confirmAddress(r)}>
+                    📍 {r.display_name}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Description */}
@@ -222,7 +324,6 @@ function ListingForm({ editId }: { editId?: string }) {
         </form>
       </div>
 
-      {/* Click outside to close suggestions */}
       {showUni && <div style={{ position: 'fixed', inset: 0, zIndex: 9 }} onClick={() => setShowUni(false)} />}
     </div>
   )
@@ -247,4 +348,11 @@ const styles: Record<string, React.CSSProperties> = {
   thumbWrap:  { position: 'relative', width: 80, height: 60 },
   thumbImg:   { width: '100%', height: '100%', objectFit: 'cover', borderRadius: 8 },
   removeThumb:{ position: 'absolute', top: -6, right: -6, width: 20, height: 20, borderRadius: '50%', background: '#FF6B6B', border: 'none', color: '#fff', fontSize: 10, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' },
+  addressVerify: { display: 'flex', flexDirection: 'column', gap: 10 },
+  addressConfirmed: { display: 'flex', alignItems: 'center', gap: 12, background: 'rgba(78,205,196,0.1)', border: '1px solid rgba(78,205,196,0.3)', borderRadius: 10, padding: '10px 14px', fontSize: 14, color: '#4ECDC4', fontWeight: 600 },
+  changeBtn:  { marginLeft: 'auto', background: 'none', border: '1px solid rgba(78,205,196,0.4)', borderRadius: 6, color: '#4ECDC4', fontSize: 12, padding: '4px 10px', cursor: 'pointer' },
+  searchBtn:  { background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 10, color: '#F0F2FF', fontSize: 14, fontWeight: 600, padding: '10px 16px', cursor: 'pointer', fontFamily: "'Syne', sans-serif", textAlign: 'left' },
+  resultsBox: { background: '#252A4A', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, overflow: 'hidden' },
+  resultsHint:{ fontSize: 12, color: '#9BA3C7', padding: '10px 14px 4px', margin: 0 },
+  resultItem: { display: 'block', width: '100%', padding: '10px 14px', background: 'none', border: 'none', borderTop: '1px solid rgba(255,255,255,0.05)', color: '#F0F2FF', fontSize: 13, cursor: 'pointer', textAlign: 'left', fontFamily: "'DM Sans', sans-serif", lineHeight: 1.4 },
 }

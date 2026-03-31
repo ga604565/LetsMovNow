@@ -155,6 +155,7 @@ const createListing = async (req, res) => {
       title, description, price, bedrooms,
       petsAllowed, utilitiesIncluded,
       address, city, state, university,
+      confirmedLat, confirmedLon,
     } = req.body;
 
     // Collect uploaded image URLs from Cloudinary (via multer middleware)
@@ -163,18 +164,20 @@ const createListing = async (req, res) => {
       return errorResponse(res, 'At least one image is required', 400);
     }
 
-    // Geocode address → coordinates
+    // Use confirmed coordinates from frontend address verification, or fallback to geocoding
     let coordinates = { type: 'Point', coordinates: [0, 0] };
     let distanceToCampus = null;
 
-    const coords = await geocodeAddress(address, city, state);
+    let coords = null;
+    if (confirmedLat && confirmedLon) {
+      coords = [parseFloat(confirmedLon), parseFloat(confirmedLat)];
+    } else {
+      coords = await geocodeAddress(address, city, state);
+    }
+
     if (coords) {
       coordinates = { type: 'Point', coordinates: coords };
-
-      // Find campus coordinates for distance calculation
-      const uni = await University.findOne({
-        name: new RegExp(university, 'i'),
-      });
+      const uni = await University.findOne({ name: new RegExp(university, 'i') });
       if (uni?.coordinates?.coordinates) {
         distanceToCampus = haversineDistance(coords, uni.coordinates.coordinates);
       }
