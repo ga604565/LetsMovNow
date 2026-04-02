@@ -298,7 +298,7 @@ h1, h2, h3, h4, h5 {
 @media (max-width: 768px) {
   .container { padding: 0 16px; }
   .listings-grid { grid-template-columns: 1fr; gap: 16px; }
-  .page { padding: 24px 0 60px; }
+  .page { padding: 24px 0 96px; } /* extra bottom padding for tab bar */
 
   h1 { font-size: 26px; }
   h2 { font-size: 20px; }
