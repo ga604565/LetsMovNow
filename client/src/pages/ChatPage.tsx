@@ -8,7 +8,7 @@ import type { Thread, Message } from '../types'
 export default function ChatPage() {
   const { threadId }  = useParams<{ threadId?: string }>()
   const { user }      = useAuth()
-  const { socket, setUnreadCount } = useSocket()
+  const { socket, setUnreadCount, setActiveThreadId } = useSocket()
 
   const [threads, setThreads]     = useState<Thread[]>([])
   const [active, setActive]       = useState<Thread | null>(null)
@@ -57,6 +57,7 @@ export default function ChatPage() {
 
   const openThread = async (thread: Thread) => {
     setActive(thread)
+    setActiveThreadId(thread._id)
     if (socket) {
       socket.emit('joinThread', thread._id)
     }
@@ -154,7 +155,7 @@ export default function ChatPage() {
               <div style={styles.msgHeader}>
                 {/* Back button on mobile */}
                 {isMobile && (
-                  <button style={styles.backBtn} onClick={() => setActive(null)}>←</button>
+                  <button style={styles.backBtn} onClick={() => { setActive(null); setActiveThreadId(null) }}>←</button>
                 )}
                 <img
                   src={active.listingSnapshot?.mainImage || ''}

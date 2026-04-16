@@ -79,13 +79,19 @@ export default function MyListingsPage() {
                 <div style={styles.actions}>
                   <Link to={`/listings/${l._id}/edit`} className="btn btn-outline btn-sm">Edit</Link>
                   {l.status === 'active' && (
-                    <button className="btn btn-ghost btn-sm" onClick={() => changeStatus(l._id, 'pending')}>Mark Pending</button>
+                    <button className="btn btn-ghost btn-sm" onClick={() => changeStatus(l._id, 'pending')}>In Talks</button>
+                  )}
+                  {l.status === 'active' && (
+                    <button className="btn btn-sm btn-ghost" style={{ color: '#FF6B6B' }} onClick={() => changeStatus(l._id, 'offMarket')}>Off Market</button>
                   )}
                   {l.status === 'pending' && (
                     <button className="btn btn-ghost btn-sm" onClick={() => changeStatus(l._id, 'active')}>Mark Active</button>
                   )}
+                  {l.status === 'pending' && (
+                    <button className="btn btn-ghost btn-sm" style={{ color: '#FF6B6B' }} onClick={() => changeStatus(l._id, 'offMarket')}>Off Market</button>
+                  )}
                   {l.status === 'offMarket' && (
-                    <span style={{ fontSize: 12, color: '#FF6B6B' }}>Admin reactivates</span>
+                    <button className="btn btn-ghost btn-sm" onClick={() => changeStatus(l._id, 'active')}>Reactivate</button>
                   )}
                   <button className="btn btn-sm" style={{ background: 'rgba(255,107,107,0.1)', color: '#FF6B6B', border: '1px solid rgba(255,107,107,0.3)' }} onClick={() => deleteListing(l._id)}>Delete</button>
                 </div>

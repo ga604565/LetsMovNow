@@ -273,9 +273,9 @@ const updateStatus = async (req, res) => {
 
     const { status } = req.body;
 
-    // Owners can only toggle active ↔ pending — offMarket is admin-only
-    if (!isAdmin && status === 'offMarket') {
-      return errorResponse(res, 'Only admin can set a listing to Off Market', 403);
+    // Validate status value
+    if (!['active', 'pending', 'offMarket'].includes(status)) {
+      return errorResponse(res, 'Invalid status value', 400);
     }
 
     // Admin reactivating an offMarket listing resets the expiry clock

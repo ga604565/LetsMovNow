@@ -297,10 +297,10 @@ h1, h2, h3, h4, h5 {
 /* ── Responsive ──────────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .container { padding: 0 16px; }
-  .listings-grid { grid-template-columns: 1fr; gap: 16px; }
-  .page { padding: 24px 0 96px; } /* extra bottom padding for tab bar */
+  .listings-grid { grid-template-columns: 1fr; gap: 14px; }
+  .page { padding: 16px 0 100px; } /* extra bottom padding for tab bar */
 
-  h1 { font-size: 26px; }
+  h1 { font-size: 24px; }
   h2 { font-size: 20px; }
   h3 { font-size: 17px; }
 
@@ -313,6 +313,9 @@ h1, h2, h3, h4, h5 {
 
   .form-label { font-size: 13px; }
 
-  .toast-container { bottom: 16px; right: 16px; left: 16px; }
+  .toast-container { bottom: 80px; right: 16px; left: 16px; }
   .toast { max-width: 100%; }
+
+  /* Card tweaks for mobile */
+  .card:hover { transform: none; }
 }

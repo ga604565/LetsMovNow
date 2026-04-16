@@ -137,9 +137,20 @@ const login = async (req, res) => {
 // ── GET /api/auth/me ──────────────────────────────────────────────────────────
 const getMe = async (req, res) => {
   try {
-    // req.user is attached by protect middleware
     const user = await User.findById(req.user._id).populate('favorites');
     return successResponse(res, user.toPublicProfile());
+  } catch (err) {
+    return errorResponse(res, err.message);
+  }
+};
+
+const updateMe = async (req, res) => {
+  try {
+    const { name } = req.body;
+    const updates = {};
+    if (name && name.trim()) updates.name = name.trim();
+    const user = await User.findByIdAndUpdate(req.user._id, updates, { new: true }).populate('favorites');
+    return successResponse(res, { user: user.toPublicProfile() });
   } catch (err) {
     return errorResponse(res, err.message);
   }
@@ -233,6 +244,7 @@ const resendVerification = async (req, res) => {
 };
 
 module.exports = {
+  updateMe,
   register,
   verifyEmail,
   login,

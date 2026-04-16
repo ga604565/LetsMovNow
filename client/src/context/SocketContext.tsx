@@ -9,6 +9,8 @@ interface SocketContextType {
   socket: Socket | null
   unreadCount: number
   setUnreadCount: (n: number) => void
+  activeThreadId: string | null
+  setActiveThreadId: (id: string | null) => void
 }
 
 const SocketContext = createContext<SocketContextType | null>(null)
@@ -19,6 +21,13 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
   const { user, isAuthenticated } = useAuth()
   const socketRef = useRef<Socket | null>(null)
   const [unreadCount, setUnreadCount] = useState(0)
+  const [activeThreadId, setActiveThreadId] = useState<string | null>(null)
+  const activeThreadIdRef = useRef<string | null>(null)
+
+  const handleSetActiveThreadId = (id: string | null) => {
+    activeThreadIdRef.current = id
+    setActiveThreadId(id)
+  }
 
   useEffect(() => {
     if (!isAuthenticated || !user) {
@@ -41,9 +50,15 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       console.log('Socket connected')
     })
 
-    // Nav badge — unread messages
+    // Live unread badge — fires on any page when a new message arrives
+    socket.on('newMessage', ({ threadId }: { threadId: string }) => {
+      // Don't increment if user is already reading that thread
+      if (activeThreadIdRef.current !== threadId) {
+        setUnreadCount((prev) => prev + 1)
+      }
+    })
+
     socket.on('unreadCountUpdate', () => {
-      // Trigger a refetch by bumping the count signal
       setUnreadCount((prev) => prev + 1)
     })
 
@@ -57,9 +72,11 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <SocketContext.Provider value={{
-      socket:        socketRef.current,
+      socket:           socketRef.current,
       unreadCount,
       setUnreadCount,
+      activeThreadId,
+      setActiveThreadId: handleSetActiveThreadId,
     }}>
       {children}
     </SocketContext.Provider>

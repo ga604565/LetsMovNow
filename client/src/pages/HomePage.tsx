@@ -14,6 +14,13 @@ export default function HomePage() {
   const [view, setView]           = useState<'grid' | 'map'>('grid')
   const [filters, setFilters]     = useState<ListingFilters>({ page: 1 })
   const [pagination, setPagination] = useState({ total: 0, totalPages: 1, page: 1 })
+  const [isMobile, setIsMobile]   = useState(window.innerWidth < 768)
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 768)
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
 
   const fetchListings = useCallback(async () => {
     setLoading(true)
@@ -49,30 +56,32 @@ export default function HomePage() {
   return (
     <div className="page">
       <div className="container">
-        {/* Hero */}
-        <div style={styles.hero}>
-          <h1 style={styles.heroTitle}>
-            Find your perfect<br />
-            <span style={{ color: '#4ECDC4' }}>campus home</span>
-          </h1>
-          <p style={styles.heroSub}>
-            Student rentals near every university — browse, save, and connect with listers directly.
-          </p>
-          {!isAuthenticated && (
-            <div style={{ display: 'flex', gap: 12, marginTop: 24 }}>
-              <Link to="/register" className="btn btn-primary btn-lg">Get Started</Link>
-              <Link to="/login" className="btn btn-ghost btn-lg">Sign In</Link>
-            </div>
-          )}
-        </div>
+        {/* Hero — desktop only */}
+        {!isMobile && (
+          <div style={styles.hero}>
+            <h1 style={styles.heroTitle}>
+              Find your perfect<br />
+              <span style={{ color: '#4ECDC4' }}>campus home</span>
+            </h1>
+            <p style={styles.heroSub}>
+              Student rentals near every university — browse, save, and connect with listers directly.
+            </p>
+            {!isAuthenticated && (
+              <div style={{ display: 'flex', gap: 12, marginTop: 24 }}>
+                <Link to="/register" className="btn btn-primary btn-lg">Get Started</Link>
+                <Link to="/login" className="btn btn-ghost btn-lg">Sign In</Link>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Search */}
         <SearchBar filters={filters} onChange={handleFilterChange} />
 
         {/* View toggle + count */}
-        <div style={styles.toolbar}>
+        <div style={{ ...styles.toolbar, ...(isMobile ? styles.toolbarMobile : {}) }}>
           <p style={styles.resultCount}>
-            {loading ? 'Searching...' : `${pagination.total} listings found`}
+            {loading ? 'Searching...' : `${pagination.total} listing${pagination.total === 1 ? '' : 's'} found`}
           </p>
           <div style={styles.viewToggle}>
             <button
@@ -159,6 +168,9 @@ const styles: Record<string, React.CSSProperties> = {
     justifyContent: 'space-between',
     alignItems:     'center',
     marginBottom:   20,
+  },
+  toolbarMobile: {
+    marginBottom: 12,
   },
   resultCount: {
     fontSize: 14,

@@ -30,6 +30,7 @@ const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:8080',
   'http://localhost:9090',
+  'http://localhost:9091',
   'https://letsmovnow.com',
   'https://www.letsmovnow.com',
 ];
@@ -39,6 +40,8 @@ const corsOptions = {
     // Allow requests with no origin (mobile apps, Postman, curl)
     if (!origin) return callback(null, true);
     if (allowedOrigins.includes(origin)) return callback(null, true);
+    // Allow any localhost port (Flutter web dev)
+    if (/^http:\/\/localhost(:\d+)?$/.test(origin)) return callback(null, true);
     callback(new Error('Not allowed by CORS'));
   },
   credentials: true,
@@ -49,6 +52,7 @@ const io = new Server(server, {
     origin: (origin, callback) => {
       if (!origin) return callback(null, true);
       if (allowedOrigins.includes(origin)) return callback(null, true);
+      if (/^http:\/\/localhost(:\d+)?$/.test(origin)) return callback(null, true);
       callback(new Error('Not allowed by CORS'));
     },
     methods: ['GET', 'POST'],
@@ -96,10 +100,10 @@ const limiter = rateLimit({
 });
 app.use('/api/', limiter);
 
-// Stricter rate limit for auth routes — 20 per 15 min
+// Stricter rate limit for auth routes
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max:      20,
+  max:      200,
   message:  { success: false, message: 'Too many auth attempts — try again later' },
 });
 app.use('/api/auth/', authLimiter);

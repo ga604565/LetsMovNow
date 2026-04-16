@@ -4,15 +4,22 @@ import { useAuth }   from '../../context/AuthContext'
 import { useSocket } from '../../context/SocketContext'
 import { chatApi }   from '../../api'
 
+// SVG icons matching Flutter's icon style
+const IconMap    = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>
+const IconSearch = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+const IconPlus   = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+const IconChat   = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+const IconHeart  = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+const IconUser   = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+
 export default function Navbar() {
   const { user, isAuthenticated, isAdmin, logout } = useAuth()
-  const { unreadCount } = useSocket()
+  const { unreadCount, setUnreadCount } = useSocket()
   const navigate  = useNavigate()
   const location  = useLocation()
   const [menuOpen, setMenuOpen]     = useState(false)
   const [sheetOpen, setSheetOpen]   = useState(false)
-  const [realUnread, setRealUnread] = useState(0)
-  const [isMobile, setIsMobile]     = useState(window.innerWidth < 768)
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
 
   useEffect(() => {
     const onResize = () => setIsMobile(window.innerWidth < 768)
@@ -20,12 +27,13 @@ export default function Navbar() {
     return () => window.removeEventListener('resize', onResize)
   }, [])
 
+  // Seed the SocketContext badge with the server count on first load
   useEffect(() => {
     if (!isAuthenticated) return
     chatApi.getUnreadCount()
-      .then((res) => setRealUnread(res.data.data.unreadCount))
+      .then((res) => setUnreadCount(res.data.data.unreadCount))
       .catch(() => {})
-  }, [isAuthenticated, unreadCount])
+  }, [isAuthenticated])
 
   const favoriteCount = user?.favorites?.length ?? 0
 
@@ -42,41 +50,46 @@ export default function Navbar() {
   if (isMobile) {
     return (
       <>
-        {/* Slim top bar — logo only */}
+        {/* Slim top bar — logo + map button */}
         <nav style={mob.topBar}>
           <Link to="/" style={mob.logo}>
-            <span style={{ fontSize: 20 }}>🏠</span>
             <span style={mob.logoText}>LetsMovNow</span>
           </Link>
-          {!isAuthenticated && (
-            <div style={{ display: 'flex', gap: 8 }}>
-              <Link to="/login" style={mob.signIn}>Sign In</Link>
-              <Link to="/register" style={mob.register}>Register</Link>
-            </div>
-          )}
+          <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+            <Link to="/map" style={mob.mapBtn}>
+              <IconMap />
+              <span style={{ fontSize: 12, fontWeight: 600, fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Map</span>
+            </Link>
+            {!isAuthenticated && (
+              <>
+                <Link to="/login" style={mob.signIn}>Sign In</Link>
+                <Link to="/register" style={mob.register}>Register</Link>
+              </>
+            )}
+          </div>
         </nav>
 
         {/* Bottom tab bar */}
         {isAuthenticated && (
           <nav style={mob.tabBar}>
             <Link to="/" style={{ ...mob.tab, ...(isActive('/') ? mob.tabActive : {}) }}>
-              <span style={mob.tabIcon}>🔍</span>
-              <span style={mob.tabLabel}>Browse</span>
+              <span style={mob.tabIconWrap}><IconSearch /></span>
+              <span style={mob.tabLabel}>Explore</span>
             </Link>
             <Link to="/listings/create" style={{ ...mob.tab, ...(isActive('/listings/create') ? mob.tabActive : {}) }}>
-              <span style={{ ...mob.tabIcon, fontSize: 22 }}>＋</span>
+              <span style={mob.tabIconWrap}><IconPlus /></span>
               <span style={mob.tabLabel}>List</span>
             </Link>
             <Link to="/chat" style={{ ...mob.tab, ...(isActive('/chat') ? mob.tabActive : {}) }}>
-              <span style={{ ...mob.tabIconWrap }}>
-                <span style={mob.tabIcon}>💬</span>
-                {realUnread > 0 && <span style={mob.tabBadge}>{realUnread > 9 ? '9+' : realUnread}</span>}
+              <span style={{ ...mob.tabIconWrap, position: 'relative' }}>
+                <IconChat />
+                {unreadCount > 0 && <span style={mob.tabBadge}>{unreadCount > 9 ? '9+' : unreadCount}</span>}
               </span>
               <span style={mob.tabLabel}>Messages</span>
             </Link>
             <Link to="/favorites" style={{ ...mob.tab, ...(isActive('/favorites') ? mob.tabActive : {}) }}>
-              <span style={{ ...mob.tabIconWrap }}>
-                <span style={mob.tabIcon}>♥</span>
+              <span style={{ ...mob.tabIconWrap, position: 'relative' }}>
+                <IconHeart />
                 {favoriteCount > 0 && <span style={{ ...mob.tabBadge, background: '#FF6B6B' }}>{favoriteCount > 9 ? '9+' : favoriteCount}</span>}
               </span>
               <span style={mob.tabLabel}>Saved</span>
@@ -166,9 +179,9 @@ export default function Navbar() {
               <Link to="/chat" style={styles.iconBtn} title="Messages">
                 <span style={styles.iconWrap}>
                   💬
-                  {realUnread > 0 && (
+                  {unreadCount > 0 && (
                     <span style={{ ...styles.badge, background: '#4ECDC4', color: '#1B1F3B' }}>
-                      {realUnread > 99 ? '99+' : realUnread}
+                      {unreadCount > 99 ? '99+' : unreadCount}
                     </span>
                   )}
                 </span>
@@ -228,11 +241,12 @@ const mob: Record<string, React.CSSProperties> = {
   logoText:     { fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 800, fontSize: 18, color: '#F0F2FF' },
   signIn:       { fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 600, fontSize: 13, color: '#9BA3C7', padding: '7px 14px', borderRadius: 10, border: '1px solid rgba(255,255,255,0.1)', background: 'transparent', textDecoration: 'none' },
   register:     { fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 700, fontSize: 13, color: '#1B1F3B', padding: '7px 14px', borderRadius: 10, background: '#4ECDC4', textDecoration: 'none' },
+  mapBtn:       { display: 'flex', alignItems: 'center', gap: 4, color: '#4ECDC4', textDecoration: 'none', padding: '6px 10px', borderRadius: 8, border: '1px solid rgba(78,205,196,0.3)', background: 'rgba(78,205,196,0.08)' },
   tabBar:       { position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 1000, background: 'rgba(27,31,59,0.98)', backdropFilter: 'blur(16px)', borderTop: '1px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'stretch', paddingBottom: 'env(safe-area-inset-bottom)' },
   tab:          { flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '8px 4px', gap: 3, background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'none', color: '#5C6490', transition: 'color 0.15s', minHeight: 56 },
   tabActive:    { color: '#4ECDC4' },
   tabIcon:      { fontSize: 20, lineHeight: 1 },
-  tabIconWrap:  { position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' },
+  tabIconWrap:  { display: 'flex', alignItems: 'center', justifyContent: 'center' },
   tabLabel:     { fontSize: 10, fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 600, letterSpacing: '0.02em' },
   tabBadge:     { position: 'absolute', top: -6, right: -8, minWidth: 16, height: 16, borderRadius: 8, background: '#4ECDC4', color: '#1B1F3B', fontSize: 9, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 3px', fontFamily: "'Plus Jakarta Sans', sans-serif" },
   avatarSmall:  { width: 26, height: 26, borderRadius: '50%', background: 'linear-gradient(135deg, #4ECDC4, #2C3E6B)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 700, color: '#fff', fontFamily: "'Plus Jakarta Sans', sans-serif" },

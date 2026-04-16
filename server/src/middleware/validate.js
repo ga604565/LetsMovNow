@@ -78,8 +78,8 @@ const listingRules = [
 
 const listingStatusRules = [
   body('status')
-    .isIn(['active', 'pending'])
-    .withMessage('Status must be active or pending — only admin can set offMarket'),
+    .isIn(['active', 'pending', 'offMarket'])
+    .withMessage('Status must be active, pending, or offMarket'),
 ];
 
 // ── Message validation rules ──────────────────────────────────────────────────

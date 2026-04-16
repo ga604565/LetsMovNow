@@ -6,6 +6,7 @@ const {
   verifyEmail,
   login,
   getMe,
+  updateMe,
   forgotPassword,
   resetPassword,
   resendVerification,
@@ -29,6 +30,7 @@ router.post('/reset-password/:token', resetPasswordRules, validate, resetPasswor
 router.post('/resend-verification',  forgotPasswordRules, validate, resendVerification);
 
 // Protected routes
-router.get('/me', protect, getMe);
+router.get('/me',  protect, getMe);
+router.put('/me',  protect, updateMe);
 
 module.exports = router;
