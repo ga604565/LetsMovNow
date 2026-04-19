@@ -50,26 +50,7 @@ export default function Navbar() {
   if (isMobile) {
     return (
       <>
-        {/* Slim top bar — logo + map button */}
-        <nav style={mob.topBar}>
-          <Link to="/" style={mob.logo}>
-            <span style={mob.logoText}>LetsMovNow</span>
-          </Link>
-          <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-            <Link to="/map" style={mob.mapBtn}>
-              <IconMap />
-              <span style={{ fontSize: 12, fontWeight: 600, fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Map</span>
-            </Link>
-            {!isAuthenticated && (
-              <>
-                <Link to="/login" style={mob.signIn}>Sign In</Link>
-                <Link to="/register" style={mob.register}>Register</Link>
-              </>
-            )}
-          </div>
-        </nav>
-
-        {/* Bottom tab bar */}
+        {/* Bottom tab bar only — no top bar on mobile */}
         <nav style={mob.tabBar}>
           <Link to="/" style={{ ...mob.tab, ...(isActive('/') ? mob.tabActive : {}) }}>
             <span style={mob.tabIconWrap}><IconSearch /></span>
