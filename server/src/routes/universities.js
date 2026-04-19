@@ -10,8 +10,9 @@ router.get('/', async (req, res) => {
     const filter = {};
     if (state)  filter.state = state.toUpperCase();
     if (search) filter.$or   = [
-      { name: new RegExp(search, 'i') },
-      { city: new RegExp(search, 'i') },
+      { name:         new RegExp(search, 'i') },
+      { city:         new RegExp(search, 'i') },
+      { abbreviation: new RegExp(search, 'i') },
     ];
 
     const universities = await University.find(filter)

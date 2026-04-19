@@ -14,6 +14,8 @@ const universitySchema = new mongoose.Schema(
       },
       coordinates: [Number], // [longitude, latitude]
     },
+    // Common abbreviation e.g. "UCF", "MIT", "UCLA"
+    abbreviation: { type: String, trim: true, uppercase: true },
     // Optional: match .edu domain to university for future features
     domain: { type: String, trim: true, lowercase: true },
   },
