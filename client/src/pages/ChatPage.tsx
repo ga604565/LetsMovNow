@@ -271,7 +271,7 @@ const styles: Record<string, React.CSSProperties> = {
   bubbleText:      { fontSize: 14, lineHeight: 1.5, color: '#F0F2FF', wordBreak: 'break-word' },
   msgTime:         { fontSize: 10, color: 'rgba(255,255,255,0.4)', marginTop: 4, textAlign: 'right' },
   inputRow:        { display: 'flex', gap: 8, padding: '12px 16px', borderTop: '1px solid rgba(255,255,255,0.08)' },
-  msgInput:        { flex: 1, background: '#2A3055', border: '1.5px solid rgba(255,255,255,0.08)', borderRadius: 12, color: '#F0F2FF', fontSize: 14, padding: '10px 14px', outline: 'none', fontFamily: "'DM Sans', sans-serif" },
+  msgInput:        { flex: 1, background: '#2A3055', border: '1.5px solid rgba(255,255,255,0.08)', borderRadius: 12, color: '#F0F2FF', fontSize: 16, padding: '10px 14px', outline: 'none', fontFamily: "'DM Sans', sans-serif" },
   noThread:        { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#5C6490' },
   backBtn:         { background: 'none', border: 'none', color: '#4ECDC4', fontSize: 22, cursor: 'pointer', padding: '0 8px 0 0', lineHeight: 1, flexShrink: 0 },
   unreadBadge:     { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#4ECDC4', color: '#1B1F3B', borderRadius: 20, fontSize: 14, fontWeight: 700, padding: '2px 10px', marginLeft: 10 },
