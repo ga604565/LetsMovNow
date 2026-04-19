@@ -183,14 +183,22 @@ export default function SearchBar({ filters, onChange }: Props) {
       {/* Main search row */}
       <div style={styles.mainRow}>
         {/* University autocomplete */}
-        <div style={{ position: 'relative', flex: 2 }}>
+        <div style={{ position: 'relative', flex: 2, display: 'flex', alignItems: 'center' }}>
           <input
-            style={styles.input}
+            style={{ ...styles.input, width: '100%', paddingRight: uniQuery ? 32 : 14 }}
             placeholder="Search university..."
             value={uniQuery}
             onChange={(e) => setUniQuery(e.target.value)}
             onFocus={() => uniSuggestions.length > 0 && setShowSuggestions(true)}
           />
+          {uniQuery && (
+            <button
+              style={{ position: 'absolute', right: 10, background: 'none', border: 'none', cursor: 'pointer', color: '#9BA3C7', display: 'flex', alignItems: 'center', padding: 0 }}
+              onClick={() => { setUniQuery(''); setSuggestions([]); clearAll(); }}
+            >
+              <IconClose />
+            </button>
+          )}
           {showSuggestions && uniSuggestions.length > 0 && (
             <div style={styles.suggestions}>
               {uniSuggestions.map((uni) => (

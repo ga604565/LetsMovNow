@@ -57,6 +57,8 @@ export default function HomePage() {
   }
 
   const handleFilterChange = (f: ListingFilters) => {
+    // If university was cleared, drop back to grid — map needs a location
+    if (!f.university && view === 'map') setView('grid')
     setFilters({ ...f, page: 1 })
   }
 
@@ -77,7 +79,11 @@ export default function HomePage() {
             </p>
             <div style={styles.viewToggle}>
               <button style={{ ...styles.toggleBtn, ...(view === 'grid' ? styles.toggleActive : {}) }} onClick={() => setView('grid')}>☰ List</button>
-              <button style={{ ...styles.toggleBtn, ...(view === 'map' ? styles.toggleActive : {}) }} onClick={() => setView('map')}>🗺 Map</button>
+              <button
+                style={{ ...styles.toggleBtn, ...(view === 'map' ? styles.toggleActive : {}), ...(!filters.university ? { opacity: 0.35, cursor: 'not-allowed' } : {}) }}
+                onClick={() => filters.university && setView('map')}
+                title={!filters.university ? 'Select a university first' : undefined}
+              >🗺 Map</button>
             </div>
           </div>
         </div>
