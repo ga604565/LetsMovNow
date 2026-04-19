@@ -389,4 +389,16 @@ h1, h2, h3, h4, h5 {
 
   /* Card tweaks for mobile */
   .card:hover { transform: none; }
+
+  /* Listing detail — single column, sidebar drops below */
+  .listing-detail-layout {
+    grid-template-columns: 1fr !important;
+  }
+  .listing-detail-sidebar {
+    position: static !important;
+    top: auto !important;
+  }
+  .listing-detail-img {
+    height: 260px !important;
+  }
 }

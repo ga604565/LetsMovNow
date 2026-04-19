@@ -104,11 +104,11 @@ export default function ListingDetailPage() {
           <span style={{ color: '#F0F2FF' }}>{listing.title}</span>
         </div>
 
-        <div style={styles.layout}>
+        <div style={styles.layout} className="listing-detail-layout">
           {/* Left — images + info */}
           <div style={styles.left}>
             {/* Main image */}
-            <div style={styles.mainImgWrap}>
+            <div style={styles.mainImgWrap} className="listing-detail-img">
               <img src={listing.images[activeImg]} alt={listing.title} style={styles.mainImg} />
               {/* Status banner for off market */}
               {listing.status === 'offMarket' && (
@@ -197,8 +197,8 @@ export default function ListingDetailPage() {
             )}
           </div>
 
-          {/* Right — sidebar */}
-          <div style={styles.sidebar}>
+          {/* Right — sidebar (on mobile: shown below via CSS order) */}
+          <div style={styles.sidebar} className="listing-detail-sidebar">
             {/* Lister info */}
             <div style={styles.sideCard}>
               <div style={styles.sideCardTitle}>Listed by</div>
