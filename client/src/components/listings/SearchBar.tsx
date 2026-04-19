@@ -79,7 +79,10 @@ export default function SearchBar({ filters, onChange }: Props) {
               onFocus={() => uniSuggestions.length > 0 && setShowSuggestions(true)}
             />
             {uniQuery && (
-              <button style={mobStyles.clearX} onClick={() => { setUniQuery(''); setSuggestions([]); clearAll(); }}>
+              <button
+                style={mobStyles.clearX}
+                onPointerDown={(e) => { e.preventDefault(); setUniQuery(''); setSuggestions([]); clearAll(); }}
+              >
                 <IconClose />
               </button>
             )}
@@ -136,7 +139,6 @@ export default function SearchBar({ filters, onChange }: Props) {
                 <label style={mobStyles.filterLabel}>Sort</label>
                 <select style={mobStyles.filterSelect} value={filters.sortBy || 'newest'} onChange={(e) => handleChange('sortBy', e.target.value)}>
                   <option value="price_asc">Price ↑</option>
-                  <option value="price_desc">Price ↓</option>
                   <option value="distance_asc">Closest</option>
                 </select>
               </div>
@@ -194,7 +196,7 @@ export default function SearchBar({ filters, onChange }: Props) {
           {uniQuery && (
             <button
               style={{ position: 'absolute', right: 10, background: 'none', border: 'none', cursor: 'pointer', color: '#9BA3C7', display: 'flex', alignItems: 'center', padding: 0 }}
-              onClick={() => { setUniQuery(''); setSuggestions([]); clearAll(); }}
+              onPointerDown={(e) => { e.preventDefault(); setUniQuery(''); setSuggestions([]); clearAll(); }}
             >
               <IconClose />
             </button>
@@ -222,7 +224,6 @@ export default function SearchBar({ filters, onChange }: Props) {
           onChange={(e) => handleChange('sortBy', e.target.value)}
         >
           <option value="price_asc">Price: Low → High</option>
-          <option value="price_desc">Price: High → Low</option>
           <option value="distance_asc">Closest to campus</option>
         </select>
 
