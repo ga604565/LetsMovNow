@@ -390,6 +390,9 @@ h1, h2, h3, h4, h5 {
   /* Card tweaks for mobile */
   .card:hover { transform: none; }
 
+  /* Hide footer on mobile — tab bar replaces it */
+  .desktop-footer { display: none !important; }
+
   /* Listing detail — single column, sidebar drops below */
   .listing-detail-layout {
     grid-template-columns: 1fr !important;
