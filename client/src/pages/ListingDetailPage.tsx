@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { listingsApi, chatApi } from '../api'
-import { useAuth } from '../context/AuthContext'
+import { useAuth }   from '../context/AuthContext'
+import { useSocket } from '../context/SocketContext'
 import type { Listing } from '../types'
 
 const STATUS_MAP: Record<string, { label: string; color: string }> = {
@@ -13,6 +14,7 @@ const STATUS_MAP: Record<string, { label: string; color: string }> = {
 export default function ListingDetailPage() {
   const { id }       = useParams<{ id: string }>()
   const { user, isAuthenticated, updateUser } = useAuth()
+  const { socket }   = useSocket()
   const navigate     = useNavigate()
 
   const [listing, setListing]     = useState<Listing | null>(null)
@@ -22,6 +24,18 @@ export default function ListingDetailPage() {
   const [favCount, setFavCount]   = useState(0)
   const [contacting, setContacting] = useState(false)
   const [statusLoading, setStatusLoading] = useState(false)
+
+  // Live status updates from other users
+  useEffect(() => {
+    if (!socket) return
+    const onStatusUpdate = ({ listingId, status }: { listingId: string; status: string }) => {
+      if (listingId === id) {
+        setListing((prev) => prev ? { ...prev, status: status as Listing['status'] } : prev)
+      }
+    }
+    socket.on('listingStatusUpdated', onStatusUpdate)
+    return () => { socket.off('listingStatusUpdated', onStatusUpdate) }
+  }, [socket, id])
 
   useEffect(() => {
     if (!id) return

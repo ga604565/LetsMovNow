@@ -294,6 +294,12 @@ const updateStatus = async (req, res) => {
       { 'listingSnapshot.status': status }
     );
 
+    // Broadcast to all connected clients so they update without refresh
+    const io = req.app.get('io');
+    if (io) {
+      io.emit('listingStatusUpdated', { listingId: String(listing._id), status });
+    }
+
     return successResponse(res, { status: listing.status }, 'Status updated');
   } catch (err) {
     return errorResponse(res, err.message);

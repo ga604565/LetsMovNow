@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import { listingsApi } from '../api'
-import { useAuth } from '../context/AuthContext'
+import { useAuth }   from '../context/AuthContext'
+import { useSocket } from '../context/SocketContext'
 import ListingCard from '../components/listings/ListingCard'
 import SearchBar   from '../components/listings/SearchBar'
 import MapView     from '../components/map/MapView'
@@ -9,6 +10,7 @@ import type { Listing, ListingFilters } from '../types'
 
 export default function HomePage() {
   const { isAuthenticated } = useAuth()
+  const { socket } = useSocket()
   const [listings, setListings]   = useState<Listing[]>([])
   const [loading, setLoading]     = useState(true)
   const [view, setView]           = useState<'grid' | 'map'>('grid')
@@ -37,6 +39,16 @@ export default function HomePage() {
   }, [filters])
 
   useEffect(() => { fetchListings() }, [fetchListings])
+
+  // Live status updates — no refresh needed
+  useEffect(() => {
+    if (!socket) return
+    const onStatusUpdate = ({ listingId, status }: { listingId: string; status: string }) => {
+      setListings((prev) => prev.map((l) => l._id === listingId ? { ...l, status: status as Listing['status'] } : l))
+    }
+    socket.on('listingStatusUpdated', onStatusUpdate)
+    return () => { socket.off('listingStatusUpdated', onStatusUpdate) }
+  }, [socket])
 
   const handleFavoriteChange = (id: string, isFavorited: boolean, count: number) => {
     setListings((prev) =>
