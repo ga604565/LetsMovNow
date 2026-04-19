@@ -43,11 +43,16 @@ export default function MyListingsPage() {
   }, [statusSheet, deleteTarget])
 
   const changeStatus = async (id: string, status: string) => {
+    const previous = listings.find((l) => l._id === id)?.status
     setStatusSheet(null)
+    // Update UI immediately — don't wait for the API
+    setListings((prev) => prev.map((l) => l._id === id ? { ...l, status: status as any } : l))
     try {
       await listingsApi.updateStatus(id, status as any)
-      setListings((prev) => prev.map((l) => l._id === id ? { ...l, status: status as any } : l))
-    } catch {}
+    } catch {
+      // Revert if API fails
+      if (previous) setListings((prev) => prev.map((l) => l._id === id ? { ...l, status: previous as any } : l))
+    }
   }
 
   const confirmDelete = async () => {
