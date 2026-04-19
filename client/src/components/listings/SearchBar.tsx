@@ -291,7 +291,7 @@ export default function SearchBar({ filters, onChange }: Props) {
 // ── Mobile styles ─────────────────────────────────────────────────────────────
 const mobStyles: Record<string, React.CSSProperties> = {
   wrap:         { display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 16 },
-  row:          { display: 'flex', gap: 8, alignItems: 'center' },
+  row:          { display: 'flex', gap: 8, alignItems: 'center', position: 'relative', zIndex: 11 },
   searchBox:    { flex: 1, display: 'flex', alignItems: 'center', gap: 8, background: '#2A3055', border: '1.5px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: '0 12px', height: 44 },
   searchInput:  { flex: 1, background: 'none', border: 'none', outline: 'none', color: '#F0F2FF', fontSize: 14, fontFamily: "'DM Sans', sans-serif" },
   clearX:       { background: 'none', border: 'none', cursor: 'pointer', color: '#9BA3C7', display: 'flex', alignItems: 'center', padding: 0, flexShrink: 0 },

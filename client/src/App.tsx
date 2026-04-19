@@ -47,7 +47,7 @@ const GuestRoute = ({ children }: { children: React.ReactNode }) => {
 }
 
 const AppRoutes = () => (
-  <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+  <div style={{ display: 'flex', flexDirection: 'column', minHeight: 'var(--app-height, 100dvh)' }}>
     <ScrollToTop />
     <Navbar />
     <main style={{ flex: 1 }}>

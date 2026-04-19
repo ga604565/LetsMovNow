@@ -118,7 +118,7 @@ export default function ChatPage() {
           </h1>
         )}
 
-        <div style={{ ...styles.layout, gridTemplateColumns: isMobile ? '1fr' : '280px 1fr', height: isMobile ? 'calc(100vh - 130px)' : 640 }}>
+        <div style={{ ...styles.layout, gridTemplateColumns: isMobile ? '1fr' : '280px 1fr', height: isMobile ? 'calc(var(--app-height, 100dvh) - 130px)' : 640 }}>
           {/* Thread list — hidden on mobile when thread is open */}
           {(!isMobile || !active) && (
             <div style={{ ...styles.threadList, borderRight: isMobile ? 'none' : '1px solid rgba(255,255,255,0.08)' }}>
