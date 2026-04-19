@@ -58,10 +58,19 @@ body {
   color:            var(--text-primary);
   line-height:      1.6;
   min-height:       100vh;
+  min-height:       100dvh;
   -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none; /* prevent iOS bounce causing layout shifts */
 }
 
-#root { min-height: 100vh; display: flex; flex-direction: column; }
+/* Lock scroll when a sheet/modal is open */
+body.modal-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+#root { min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; }
 
 img { max-width: 100%; display: block; }
 a   { color: var(--teal); text-decoration: none; }
@@ -332,8 +341,11 @@ h1, h2, h3, h4, h5 {
 .tab-avatar { width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg, #4ECDC4, #2C3E6B); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #fff; }
 
 /* Bottom sheet */
-.sheet-overlay  { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1100; backdrop-filter: blur(2px); }
-.bottom-sheet   { position: fixed; bottom: 0; left: 0; right: 0; z-index: 1101; background: #1E2340; border-radius: 20px 20px 0 0; border: 1px solid rgba(255,255,255,0.1); padding-bottom: calc(env(safe-area-inset-bottom) + 16px); }
+.sheet-overlay  { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1100; backdrop-filter: blur(2px); animation: fadeIn 0.18s ease; }
+.bottom-sheet   { position: fixed; bottom: 0; left: 0; right: 0; z-index: 1101; background: #1E2340; border-radius: 20px 20px 0 0; border: 1px solid rgba(255,255,255,0.1); padding-bottom: calc(env(safe-area-inset-bottom) + 16px); animation: slideUp 0.25s cubic-bezier(0.32,0.72,0,1); }
+
+@keyframes fadeIn  { from { opacity: 0 } to { opacity: 1 } }
+@keyframes slideUp { from { transform: translateY(100%) } to { transform: translateY(0) } }
 .sheet-handle   { width: 40px; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.15); margin: 12px auto 8px; }
 .sheet-header   { display: flex; align-items: center; gap: 14px; padding: 12px 20px 16px; }
 .sheet-avatar-lg{ width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #4ECDC4, #2C3E6B); display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; color: #fff; flex-shrink: 0; }

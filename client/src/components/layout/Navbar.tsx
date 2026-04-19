@@ -17,6 +17,24 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen]   = useState(false)
   const [sheetOpen, setSheetOpen] = useState(false)
 
+  // Lock body scroll when profile sheet is open
+  useEffect(() => {
+    if (sheetOpen) {
+      const y = window.scrollY
+      document.body.classList.add('modal-open')
+      document.body.style.top = `-${y}px`
+    } else {
+      const y = Math.abs(parseInt(document.body.style.top || '0'))
+      document.body.classList.remove('modal-open')
+      document.body.style.top = ''
+      window.scrollTo(0, y)
+    }
+    return () => {
+      document.body.classList.remove('modal-open')
+      document.body.style.top = ''
+    }
+  }, [sheetOpen])
+
   useEffect(() => {
     if (!isAuthenticated) return
     chatApi.getUnreadCount()

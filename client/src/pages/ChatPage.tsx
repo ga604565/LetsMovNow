@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { chatApi } from '../api'
 import { useAuth }   from '../context/AuthContext'
 import { useSocket } from '../context/SocketContext'
@@ -16,7 +16,8 @@ export default function ChatPage() {
   const [body, setBody]           = useState('')
   const [sending, setSending]     = useState(false)
   const [totalUnread, setTotalUnread] = useState(0)
-  const bottomRef = useRef<HTMLDivElement>(null)
+  const bottomRef  = useRef<HTMLDivElement>(null)
+  const inputRef   = useRef<HTMLInputElement>(null)
 
   // Load threads
   useEffect(() => {
@@ -79,10 +80,12 @@ export default function ChatPage() {
     e.preventDefault()
     if (!body.trim() || !active || sending) return
     setSending(true)
+    inputRef.current?.blur() // dismiss keyboard on mobile
     try {
       const res = await chatApi.sendMessage(active._id, body.trim())
       setMessages((prev) => [...prev, res.data.data.message])
       setBody('')
+      setTimeout(() => bottomRef.current?.scrollIntoView({ behavior: 'smooth' }), 100)
     } finally { setSending(false) }
   }
 
@@ -217,6 +220,7 @@ export default function ChatPage() {
               {!active.isBlocked && (
                 <form onSubmit={send} style={styles.inputRow}>
                   <input
+                    ref={inputRef}
                     style={styles.msgInput}
                     placeholder="Type a message..."
                     value={body}

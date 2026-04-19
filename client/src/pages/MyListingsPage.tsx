@@ -23,6 +23,25 @@ export default function MyListingsPage() {
       .finally(() => setLoading(false))
   }, [])
 
+  // Lock body scroll when any bottom sheet is open
+  useEffect(() => {
+    const open = !!(statusSheet || deleteTarget)
+    if (open) {
+      const y = window.scrollY
+      document.body.classList.add('modal-open')
+      document.body.style.top = `-${y}px`
+    } else {
+      const y = Math.abs(parseInt(document.body.style.top || '0'))
+      document.body.classList.remove('modal-open')
+      document.body.style.top = ''
+      window.scrollTo(0, y)
+    }
+    return () => {
+      document.body.classList.remove('modal-open')
+      document.body.style.top = ''
+    }
+  }, [statusSheet, deleteTarget])
+
   const changeStatus = async (id: string, status: string) => {
     setStatusSheet(null)
     try {
