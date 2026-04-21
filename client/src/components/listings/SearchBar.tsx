@@ -81,6 +81,7 @@ export default function SearchBar({ filters, onChange }: Props) {
             {uniQuery && (
               <button
                 style={mobStyles.clearX}
+                aria-label="Clear search"
                 onPointerDown={(e) => { e.preventDefault(); setUniQuery(''); setSuggestions([]); clearAll(); }}
               >
                 <IconClose />
@@ -89,6 +90,7 @@ export default function SearchBar({ filters, onChange }: Props) {
           </div>
           <button
             style={{ ...mobStyles.filterBtn, ...(showFilters || activeFilterCount > 0 ? mobStyles.filterBtnActive : {}) }}
+            aria-label={showFilters ? 'Hide filters' : 'Show filters'}
             onClick={() => setShowFilters(!showFilters)}
           >
             <IconTune />
@@ -189,6 +191,7 @@ export default function SearchBar({ filters, onChange }: Props) {
           {uniQuery && (
             <button
               style={{ position: 'absolute', right: 10, background: 'none', border: 'none', cursor: 'pointer', color: '#9BA3C7', display: 'flex', alignItems: 'center', padding: 0 }}
+              aria-label="Clear search"
               onPointerDown={(e) => { e.preventDefault(); setUniQuery(''); setSuggestions([]); clearAll(); }}
             >
               <IconClose />
@@ -213,6 +216,7 @@ export default function SearchBar({ filters, onChange }: Props) {
         {/* Filter toggle */}
         <button
           style={{ ...styles.filterToggle, ...(showFilters ? styles.filterToggleActive : {}) }}
+          aria-label={showFilters ? 'Hide filters' : 'Show filters'}
           onClick={() => setShowFilters(!showFilters)}
         >
           ⚙ Filters {hasFilters && <span style={styles.filterDot} />}

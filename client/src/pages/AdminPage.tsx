@@ -193,7 +193,7 @@ export default function AdminPage() {
                           <span style={{ fontSize: 11, color, fontWeight: 600 }}>{STATUS_LABEL[l.status]}</span>
                         </div>
                       </div>
-                      <button style={s.moreBtn} onClick={() => setActionSheet({ type: 'listing', item: l })}>···</button>
+                      <button style={s.moreBtn} aria-label={`Actions for ${l.title}`} onClick={() => setActionSheet({ type: 'listing', item: l })}>···</button>
                     </div>
                   </div>
                 )
@@ -233,7 +233,7 @@ export default function AdminPage() {
                       <div style={s.cardMeta}>{u.email}</div>
                       <div style={s.cardMeta}>Joined {new Date(u.createdAt).toLocaleDateString()}</div>
                     </div>
-                    <button style={s.moreBtn} onClick={() => setActionSheet({ type: 'user', item: u })}>···</button>
+                    <button style={s.moreBtn} aria-label={`Actions for ${u.name}`} onClick={() => setActionSheet({ type: 'user', item: u })}>···</button>
                   </div>
                 </div>
               ))}

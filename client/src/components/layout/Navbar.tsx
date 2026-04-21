@@ -95,7 +95,7 @@ export default function Navbar() {
                       <Link to="/favorites" style={d.dropdownItem} onClick={() => setMenuOpen(false)}>Saved Homes</Link>
                       {isAdmin && <Link to="/admin" style={{ ...d.dropdownItem, color: '#FFE66D' }} onClick={() => setMenuOpen(false)}>Admin Panel</Link>}
                       <div style={d.dropdownDivider} />
-                      <button style={{ ...d.dropdownItem, color: '#FF6B6B', width: '100%', textAlign: 'left' }} onClick={handleLogout}>Sign Out</button>
+                      <button style={{ ...d.dropdownItem, color: '#FF6B6B', width: '100%', textAlign: 'left' }} aria-label="Sign out" onClick={handleLogout}>Sign Out</button>
                     </div>
                   )}
                 </div>
@@ -137,7 +137,7 @@ export default function Navbar() {
               </span>
               <span className="tab-label">Messages</span>
             </Link>
-            <button className={`tab${sheetOpen ? ' tab-active' : ''}`} onClick={() => setSheetOpen(true)}>
+            <button className={`tab${sheetOpen ? ' tab-active' : ''}`} aria-label="Open profile menu" onClick={() => setSheetOpen(true)}>
               <span className="tab-avatar">{user!.name.charAt(0).toUpperCase()}</span>
               <span className="tab-label">Profile</span>
             </button>
@@ -170,7 +170,7 @@ export default function Navbar() {
             <Link to="/favorites" className="sheet-item" onClick={() => setSheetOpen(false)}><span className="sheet-item-icon">♥</span> Saved Homes</Link>
             {isAdmin && <Link to="/admin" className="sheet-item" style={{ color: '#FFE66D' }} onClick={() => setSheetOpen(false)}><span className="sheet-item-icon">⚙️</span> Admin Panel</Link>}
             <div className="sheet-divider" />
-            <button className="sheet-item" style={{ color: '#FF6B6B', width: '100%', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer' }} onClick={handleLogout}><span className="sheet-item-icon">↩</span> Sign Out</button>
+            <button className="sheet-item" aria-label="Sign out" style={{ color: '#FF6B6B', width: '100%', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer' }} onClick={handleLogout}><span className="sheet-item-icon">↩</span> Sign Out</button>
           </div>
         </>
       )}
