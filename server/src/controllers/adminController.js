@@ -160,8 +160,92 @@ const getAllThreads = async (req, res) => {
   }
 };
 
+// ── Stats ─────────────────────────────────────────────────────────────────────
+
+const getStats = async (req, res) => {
+  try {
+    const [totalUsers, totalListings, activeListings, totalThreads] = await Promise.all([
+      User.countDocuments(),
+      Listing.countDocuments(),
+      Listing.countDocuments({ status: 'active' }),
+      Thread.countDocuments(),
+    ]);
+    const boostedListings = await Listing.countDocuments({ boostedUntil: { $gt: new Date() } });
+    return successResponse(res, { totalUsers, totalListings, activeListings, totalThreads, boostedListings });
+  } catch (err) {
+    return errorResponse(res, err.message);
+  }
+};
+
+// ── Boost listing ─────────────────────────────────────────────────────────────
+
+const boostListing = async (req, res) => {
+  try {
+    const { days = 7 } = req.body;
+    const listing = await Listing.findById(req.params.id);
+    if (!listing) return errorResponse(res, 'Listing not found', 404);
+
+    const until = new Date();
+    until.setDate(until.getDate() + parseInt(days));
+    listing.boostedUntil = until;
+    await listing.save();
+
+    const io = req.app.get('io');
+    if (io) io.emit('listingStatusUpdated', { listingId: String(listing._id), status: listing.status });
+
+    return successResponse(res, { boostedUntil: listing.boostedUntil }, `Listing boosted for ${days} days`);
+  } catch (err) {
+    return errorResponse(res, err.message);
+  }
+};
+
+// ── Remove boost ──────────────────────────────────────────────────────────────
+
+const unboostListing = async (req, res) => {
+  try {
+    const listing = await Listing.findById(req.params.id);
+    if (!listing) return errorResponse(res, 'Listing not found', 404);
+    listing.boostedUntil = null;
+    await listing.save();
+    return successResponse(res, null, 'Boost removed');
+  } catch (err) {
+    return errorResponse(res, err.message);
+  }
+};
+
+// ── Force listing status ──────────────────────────────────────────────────────
+
+const forceListingStatus = async (req, res) => {
+  try {
+    const { status } = req.body;
+    if (!['active', 'pending', 'offMarket'].includes(status)) {
+      return errorResponse(res, 'Invalid status', 400);
+    }
+    const listing = await Listing.findById(req.params.id);
+    if (!listing) return errorResponse(res, 'Listing not found', 404);
+
+    listing.status = status;
+    if (status === 'active') {
+      const expiry = new Date();
+      expiry.setDate(expiry.getDate() + 90);
+      listing.expiresAt = expiry;
+    }
+    await listing.save();
+    await Thread.updateMany({ listing: listing._id }, { 'listingSnapshot.status': status });
+
+    const io = req.app.get('io');
+    if (io) io.emit('listingStatusUpdated', { listingId: String(listing._id), status });
+
+    return successResponse(res, { status }, 'Status updated');
+  } catch (err) {
+    return errorResponse(res, err.message);
+  }
+};
+
 module.exports = {
+  getStats,
   getUsers, updateUser, deleteUser,
   getAllListings, reactivateListing, adminDeleteListing,
+  boostListing, unboostListing, forceListingStatus,
   getAllThreads,
 };
