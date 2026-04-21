@@ -70,14 +70,14 @@ export default function Navbar() {
           <div style={d.right}>
             {isAuthenticated ? (
               <>
-                <Link to="/favorites" style={d.iconBtn}>
+                <Link to="/favorites" style={d.iconBtn} aria-label={`Saved homes${favoriteCount > 0 ? `, ${favoriteCount}` : ''}`}>
                   <span style={d.iconWrap}>♥{favoriteCount > 0 && <span style={{ ...d.badge, background: '#FF6B6B' }}>{favoriteCount > 99 ? '99+' : favoriteCount}</span>}</span>
                 </Link>
-                <Link to="/chat" style={d.iconBtn}>
+                <Link to="/chat" style={d.iconBtn} aria-label={`Messages${unreadCount > 0 ? `, ${unreadCount} unread` : ''}`}>
                   <span style={d.iconWrap}>💬{unreadCount > 0 && <span style={{ ...d.badge, background: '#4ECDC4', color: '#1B1F3B' }}>{unreadCount > 99 ? '99+' : unreadCount}</span>}</span>
                 </Link>
                 <div style={{ position: 'relative' }}>
-                  <button style={d.userBtn} onClick={() => setMenuOpen(!menuOpen)}>
+                  <button style={d.userBtn} aria-label="Account menu" onClick={() => setMenuOpen(!menuOpen)}>
                     <span style={d.avatar}>{user!.name.charAt(0).toUpperCase()}</span>
                     <span style={d.userName}>{user!.name.split(' ')[0]}</span>
                     {user!.isVerifiedStudent && <span style={d.verifiedDot}>✓</span>}
