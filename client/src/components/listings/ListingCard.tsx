@@ -64,6 +64,7 @@ export default function ListingCard({ listing, onFavoriteChange }: Props) {
             alt={listing.title}
             style={styles.image}
             loading="lazy"
+            decoding="async"
           />
 
           {/* Sponsored ribbon */}
