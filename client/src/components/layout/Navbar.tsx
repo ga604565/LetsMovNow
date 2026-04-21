@@ -180,7 +180,7 @@ export default function Navbar() {
 
 // Desktop-only inline styles
 const d: Record<string, React.CSSProperties> = {
-  inner:          { maxWidth: 1280, margin: '0 auto', padding: '0 24px', height: 64, display: 'flex', alignItems: 'center', gap: 32 },
+  inner:          { maxWidth: 1280, margin: '0 auto', padding: '0 24px', height: 64, display: 'flex', alignItems: 'center', gap: 32, justifyContent: 'space-between' },
   logo:           { display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none', flexShrink: 0 },
   logoText:       { fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 800, fontSize: 20, color: '#F0F2FF' },
   links:          { display: 'flex', alignItems: 'center', gap: 4, flex: 1 },

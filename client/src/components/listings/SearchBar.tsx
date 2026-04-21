@@ -138,8 +138,8 @@ export default function SearchBar({ filters, onChange }: Props) {
               <div style={mobStyles.filterGroup}>
                 <label style={mobStyles.filterLabel}>Sort</label>
                 <select style={mobStyles.filterSelect} value={filters.sortBy || 'newest'} onChange={(e) => handleChange('sortBy', e.target.value)}>
+                  <option value="newest">Newest</option>
                   <option value="price_asc">Price ↑</option>
-                  <option value="distance_asc">Closest</option>
                 </select>
               </div>
               <div style={mobStyles.filterGroup}>
@@ -223,8 +223,8 @@ export default function SearchBar({ filters, onChange }: Props) {
           value={filters.sortBy || 'newest'}
           onChange={(e) => handleChange('sortBy', e.target.value)}
         >
+          <option value="newest">Newest</option>
           <option value="price_asc">Price: Low → High</option>
-          <option value="distance_asc">Closest to campus</option>
         </select>
 
         {/* Filter toggle */}
