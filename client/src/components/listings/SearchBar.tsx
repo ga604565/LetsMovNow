@@ -136,13 +136,6 @@ export default function SearchBar({ filters, onChange }: Props) {
                 </select>
               </div>
               <div style={mobStyles.filterGroup}>
-                <label style={mobStyles.filterLabel}>Sort</label>
-                <select style={mobStyles.filterSelect} value={filters.sortBy || 'newest'} onChange={(e) => handleChange('sortBy', e.target.value)}>
-                  <option value="newest">Newest</option>
-                  <option value="price_asc">Price ↑</option>
-                </select>
-              </div>
-              <div style={mobStyles.filterGroup}>
                 <label style={mobStyles.filterLabel}>Min Price</label>
                 <input style={mobStyles.filterSelect} type="number" placeholder="$0" value={filters.minPrice || ''} onChange={(e) => handleChange('minPrice', e.target.value)} />
               </div>
@@ -216,16 +209,6 @@ export default function SearchBar({ filters, onChange }: Props) {
             </div>
           )}
         </div>
-
-        {/* Sort */}
-        <select
-          style={{ ...styles.input, flex: 1 }}
-          value={filters.sortBy || 'newest'}
-          onChange={(e) => handleChange('sortBy', e.target.value)}
-        >
-          <option value="newest">Newest</option>
-          <option value="price_asc">Price: Low → High</option>
-        </select>
 
         {/* Filter toggle */}
         <button
